@@ -2,3 +2,5 @@ results
 checkpoints
 *pycache*
 output
+.vscode
+.vscode/*
