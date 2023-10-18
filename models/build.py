@@ -15,7 +15,7 @@ def build_model(config):
         model = ResNet18(num_classes=config.MODEL.NUM_CLASSES)
 
     elif model_type == 'alexnet':
-        model = AlexNet(num_classes=config.MODEL.NUM_CLASSES)
+        model = AlexNet(num_classes=config.MODEL.NUM_CLASSES, drop_rate=config.MODEL.DROP_RATE)
     # elif model_type == 'resnet34':
     #     model = ResNet34(num_classes=config.MODEL.NUM_CLASSES)
     # elif model_type == 'resnet50':

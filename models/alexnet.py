@@ -3,9 +3,7 @@ from torch import nn
 
 
 class AlexNet(nn.Module):
-    DROPOUT_RATE = 0.5
-
-    def __init__(self, num_classes: int):
+    def __init__(self, num_classes: int, drop_rate: float):
         super().__init__()
 
         self.features = nn.Sequential(
@@ -32,11 +30,11 @@ class AlexNet(nn.Module):
         )
 
         self.classifier = nn.Sequential(
-            nn.Dropout(p=self.DROPOUT_RATE),
+            nn.Dropout(p=drop_rate),
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(),
 
-            nn.Dropout(p=self.DROPOUT_RATE),
+            nn.Dropout(p=drop_rate),
             nn.Linear(4096, 4096),
             nn.ReLU(),
 

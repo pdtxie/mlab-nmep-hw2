@@ -119,8 +119,8 @@ class CIFAR10Dataset(Dataset):
                 transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
-                # transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-                # transforms.Resize([self.img_size] * 2),
+                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+                transforms.Resize([self.img_size] * 2),
             ]
         else:
             transform = [
