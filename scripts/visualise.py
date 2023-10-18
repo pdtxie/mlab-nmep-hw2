@@ -1,4 +1,4 @@
-from ../data/datasets.py import MediumImagenetHDF5Dataset, CIFAR10Dataset
+from ..data.datasets import MediumImagenetHDF5Dataset, CIFAR10Dataset
 
 
 def visualise():
