@@ -166,7 +166,20 @@ Visualize ~10 or so examples from the dataset. There's many ways to do it - you 
 
 Be sure to also get the class names. You might notice that we don't have them loaded anywhere in the repo - feel free to fix it or just hack it together for now, the class names are in a file in the same folder as the hdf5 dataset.
 
-`YOUR ANSWER HERE`
+
+**Images**: (from `scripts.py` $\rightarrow$ `visualise()`)
+
+![0](other/cifar_0.jpg)
+![1](other/cifar_1.jpg)
+![2](other/cifar_2.jpg)
+![3](other/cifar_3.jpg)
+![4](other/cifar_4.jpg)
+![5](other/cifar_5.jpg)
+![6](other/cifar_6.jpg)
+![7](other/cifar_7.jpg)
+![8](other/cifar_8.jpg)
+![9](other/cifar_9.jpg)
+
 
 
 
@@ -176,11 +189,15 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## What models are implemented for you?
 
-`YOUR ANSWER HERE`
+Just `Lenet`.
+
 
 ## What do PyTorch models inherit from? What functions do we need to implement for a PyTorch Model? (hint there are 2)
 
-`YOUR ANSWER HERE`
+PyTorch models inherit from `torch.nn.Module`.
+
+Need to implement `__init__` and `forward`.
+
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 

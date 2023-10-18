@@ -7,6 +7,7 @@ class LeNet(nn.Module):
 
     def __init__(self, num_classes: int = 200) -> None:
         super().__init__()
+
         self.features = nn.Sequential(
             nn.Conv2d(3, 6, kernel_size=5, stride=1, padding=2),
             nn.Sigmoid(),
@@ -15,6 +16,7 @@ class LeNet(nn.Module):
             nn.Sigmoid(),
             nn.AvgPool2d(kernel_size=2, stride=2),
         )
+
         self.classifier = nn.Sequential(
             nn.Linear(16 * 6 * 6, 120),
             nn.Sigmoid(),

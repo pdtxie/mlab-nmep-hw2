@@ -14,8 +14,9 @@ def visualise():
 
         x1_n = np.transpose(x1.numpy(), [1, 2, 0]) * 255.0
         # x2_n = np.transpose(x2.numpy(), [1, 2, 0]) * 255.0
-        
+
         cv2.imwrite(f"cifar_{i}.jpg", x1_n)
         # cv2.imwrite(f"mihdf5_{i}.jpg", x2_n)
+
 
 visualise()
