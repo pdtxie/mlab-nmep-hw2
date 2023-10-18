@@ -21,6 +21,9 @@ from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
 
+# visualising
+from scripts import visualise
+
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
     parser.add_argument("--cfg", type=str, required=True, metavar="FILE", help="path to config file")
@@ -212,6 +215,7 @@ def evaluate(config, data_loader, model):
     return preds
 
 
+"""
 if __name__ == "__main__":
     args, config = parse_option()
 
@@ -235,3 +239,7 @@ if __name__ == "__main__":
     logger.info(json.dumps(vars(args)))
 
     main(config)
+"""
+
+if __name__ == "__main__":
+    visualise()
