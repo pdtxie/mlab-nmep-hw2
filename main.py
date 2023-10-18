@@ -21,9 +21,6 @@ from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
 
-# visualising
-from scripts import visualise
-
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
     parser.add_argument("--cfg", type=str, required=True, metavar="FILE", help="path to config file")
@@ -107,10 +104,8 @@ def main(config):
         log_stats = {"epoch": epoch, "n_params": n_parameters, "n_flops": n_flops,
                      "train_acc": train_acc1, "train_loss": train_loss, 
                      "val_acc": val_acc1, "val_loss": val_loss}
-        with open(
-                os.path.join(config.OUTPUT, "metrics.json"), mode="a", encoding="utf-8"
-            ) as f:
-                f.write(json.dumps(log_stats) + "\n")
+        with open(os.path.join(config.OUTPUT, "metrics.json"), mode="a", encoding="utf-8") as f:
+            f.write(json.dumps(log_stats) + "\n")
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
@@ -207,15 +202,17 @@ def validate(config, data_loader, model):
 def evaluate(config, data_loader, model):
     model.eval()
     preds = []
+
     for idx, (images, _) in enumerate(tqdm(data_loader)):
         images = images.cuda(non_blocking=True)
         output = model(images)
         preds.append(output.cpu().numpy())
+
     preds = np.concatenate(preds)
+
     return preds
 
 
-"""
 if __name__ == "__main__":
     args, config = parse_option()
 
@@ -239,7 +236,3 @@ if __name__ == "__main__":
     logger.info(json.dumps(vars(args)))
 
     main(config)
-"""
-
-if __name__ == "__main__":
-    visualise()

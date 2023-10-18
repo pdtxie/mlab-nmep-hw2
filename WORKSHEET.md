@@ -68,7 +68,6 @@ In `main.py`.
 Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
 
 
-# TODO:
 ```
 main:
 - loads the loader (dataset) with build_loader
@@ -82,7 +81,7 @@ train_one_epoch: trains one epoch given a config, model, loss function, optimise
 validate: doesn't do gradient descent, just validates how well the model is on a set of data
 
 
-evaluate: 
+evaluate: doesn't do gradient descent too, but outputs the predictions to a kaggle format
 ```
 
 
@@ -201,7 +200,8 @@ Need to implement `__init__` and `forward`.
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
-`YOUR ANSWER HERE`
+11 layers
+99.28K parameters.
 
 
 
@@ -211,16 +211,32 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.0 What configs have we provided for you? What models and datasets do they train on?
 
-`YOUR ANSWER HERE`
+`lenet_base`, which trains on CIFAR-10
+
+`resnet_base`, which trains on CIFAR-10 too
+
+`resnet_medium_imagenet` which trains on MediumImagenet
+
+
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-`YOUR ANSWER HERE`
+- gets the loaders from `build_loader` with `config`
+- gets model with `build_model`
+- logs number of parameters and current flops
+- gets optimiser with `build_optimizer`
+- sets criterion / loss function
+- starts training
+- evaluates the model
+
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
 
-`YOUR ANSWER HERE`
+`validate` validates the code on test data, runs it without doing gradient descent / doesn't affect the weights, just checks accuracy.
+
+`evaluate` also runs through without doing gradient descent, but outputs the predictions in a format for kaggle.
+
 
 
 # Part 4: AlexNet
@@ -246,7 +262,8 @@ Linear with 4096 output units
 Linear with num_classes output units
 ```
 
-> ReLU activation after every Conv and Linear layer. DO **NOT** Forget to add activatioons after every layer. Do not apply activation after the last layer.
+> ReLU activation after every Conv and Linear layer. DO **NOT** Forget to add activations after every layer. Do not apply activation after the last layer.
+
 
 ## 4.1 How many parameters does AlexNet have? How does it compare to LeNet? With the same batch size, how much memory do LeNet and AlexNet take up while training? 
 > (hint: use `gpuststat`)
