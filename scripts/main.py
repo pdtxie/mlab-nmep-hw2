@@ -2,4 +2,5 @@ from ..data.datasets import MediumImagenetHDF5Dataset, CIFAR10Dataset
 
 
 def visualise():
-    MIHDF5_dataset = MediumImagenetHDF5Dataset(224)
+    cifar10_dataset = CIFAR10Dataset()
+    print(cifar10_dataset)

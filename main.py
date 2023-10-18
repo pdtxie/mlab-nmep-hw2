@@ -48,9 +48,7 @@ def parse_option():
 
 
 def main(config):
-    dataset_train, dataset_val, dataset_test, data_loader_train, data_loader_val, data_loader_test = build_loader(
-        config
-    )
+    dataset_train, dataset_val, dataset_test, data_loader_train, data_loader_val, data_loader_test = build_loader(config)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = build_model(config)
