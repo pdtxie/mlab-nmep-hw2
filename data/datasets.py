@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import h5py
 import torch
 from PIL import Image, ImageFile
@@ -53,13 +51,12 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class MediumImagenetHDF5Dataset(Dataset):
-    def __init__(
-        self,
-        img_size,
-        split: str = "train",
-        filepath: str = "/data/medium-imagenet/medium-imagenet-nmep-96.hdf5",
-        augment: bool = True,
-    ):
+    def __init__(self,
+                 img_size,
+                 split: str = "train",
+                 filepath: str = "/data/medium-imagenet/medium-imagenet-nmep-96.hdf5",
+                 augment: bool = True):
+
         assert split in ["train", "val", "test"]
         self.split = split
         self.augment = augment
@@ -69,12 +66,15 @@ class MediumImagenetHDF5Dataset(Dataset):
 
     def __getitem__(self, index):
         image = self.file[f"images-{self.split}"][index]
+
         if self.split != "test":
             label = self.file[f"labels-{self.split}"][index]
         else:
             label = -1
+
         image = self.transform(image)
         label = torch.tensor(label, dtype=torch.long)
+
         return image, label
 
     def __len__(self):
@@ -93,6 +93,7 @@ class MediumImagenetHDF5Dataset(Dataset):
                     transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
                 ]
             )
+
         return transforms.Compose(transform)
 
 
@@ -127,4 +128,5 @@ class CIFAR10Dataset(Dataset):
                 transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
                 transforms.Resize([self.img_size] * 2),
             ]
+
         return transforms.Compose(transform)

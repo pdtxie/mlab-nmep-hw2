@@ -8,10 +8,12 @@ def build_loader(config):
         dataset_train = CIFAR10Dataset(img_size=config.DATA.IMG_SIZE, train=True)
         dataset_val = CIFAR10Dataset(img_size=config.DATA.IMG_SIZE, train=False)
         dataset_test = CIFAR10Dataset(img_size=config.DATA.IMG_SIZE, train=False)
+
     elif config.DATA.DATASET == "medium_imagenet":
         dataset_train = MediumImagenetHDF5Dataset(config.DATA.IMG_SIZE, split="train", augment=True)
         dataset_val = MediumImagenetHDF5Dataset(config.DATA.IMG_SIZE, split="val", augment=False)
         dataset_test = MediumImagenetHDF5Dataset(config.DATA.IMG_SIZE, split="test", augment=False)
+
     else:
         raise NotImplementedError
 
@@ -20,7 +22,7 @@ def build_loader(config):
         batch_size=config.DATA.BATCH_SIZE,
         shuffle=True,
         num_workers=config.DATA.NUM_WORKERS,
-        pin_memory=config.DATA.PIN_MEMORY,
+        pin_memory=config.DATA.PIN_MEMORY
     )
 
     data_loader_val = DataLoader(
@@ -28,7 +30,7 @@ def build_loader(config):
         batch_size=config.DATA.BATCH_SIZE,
         shuffle=False,
         num_workers=config.DATA.NUM_WORKERS,
-        pin_memory=False,
+        pin_memory=False
     )
 
     data_loader_test = DataLoader(
@@ -36,7 +38,7 @@ def build_loader(config):
         batch_size=config.DATA.BATCH_SIZE,
         shuffle=False,
         num_workers=config.DATA.NUM_WORKERS,
-        pin_memory=False,
+        pin_memory=False
     )
 
     return dataset_train, dataset_val, dataset_test, data_loader_train, data_loader_val, data_loader_test

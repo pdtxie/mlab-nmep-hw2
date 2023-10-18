@@ -4,3 +4,5 @@ checkpoints
 output
 .vscode
 .vscode/*
+
+.DS_Store
