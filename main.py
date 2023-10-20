@@ -8,6 +8,9 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
+
+
 from timm.utils import AverageMeter, accuracy
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import Dataset  # For custom datasets
@@ -84,6 +87,10 @@ def main(config):
 
     logger.info("Start training")
     start_time = time.time()
+
+    # graphs
+    train_losses, val_losses = [], []
+
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
         train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
         logger.info(f" * Train Acc {train_acc1:.3f} Train Loss {train_loss:.3f}")
@@ -93,6 +100,9 @@ def main(config):
         val_acc1, val_loss = validate(config, data_loader_val, model)
         logger.info(f" * Val Acc {val_acc1:.3f} Val Loss {val_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
+
+        train_losses.append(train_loss)
+        val_losses.append(val_loss)
 
         if epoch % config.SAVE_FREQ == 0 or epoch == (config.TRAIN.EPOCHS - 1):
             save_checkpoint(config, epoch, model, max_accuracy, optimizer, lr_scheduler, logger)
@@ -115,6 +125,10 @@ def main(config):
     preds = evaluate(config, data_loader_test, model)
     np.save(os.path.join(config.OUTPUT, "preds.npy"), preds)
     # TODO save predictions to csv in kaggle format
+
+    # save graphs to files
+    plt.plot(train_losses)
+    plt.savefig("train.png")
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
