@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 
 
 def graph(title: str,
-          label: (str, str),
-          data: (int[], float[]),
+          label: tuple[str, str],
+          data: tuple[list[int], list[float]],
           file_name: str):
 
     plt.plot(data[0], data[1])
