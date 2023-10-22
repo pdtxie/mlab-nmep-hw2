@@ -301,6 +301,20 @@ In `utils/graphing.py`.
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
+#### LeNet:
+
+![0](other/5.1/lenet_train_accs.png)
+![1](other/5.1/lenet_val_accs.png)
+![2](other/5.1/lenet_train_loss.png)
+![3](other/5.1/lenet_val_loss.png)
+
+
+#### AlexNet:
+
+![4](other/5.1/alexnet_train_accs.png)
+![5](other/5.1/alexnet_val_accs.png)
+![6](other/5.1/alexnet_train_loss.png)
+![7](other/5.1/alexnet_val_loss.png)
 
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.

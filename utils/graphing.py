@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 def graph(title: str,
           label: tuple[str, str],
           data: tuple[list[int], list[float]],
-          file_name: str):
+          file_name: str,
+          reset: bool = True):
 
     plt.plot(data[0], data[1])
     plt.title(title)
@@ -14,4 +15,6 @@ def graph(title: str,
     plt.ylabel(ylabel=y)
 
     plt.savefig(file_name)
-    plt.clf()
+
+    if reset:
+        plt.clf()

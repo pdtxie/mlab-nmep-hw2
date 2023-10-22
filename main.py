@@ -130,25 +130,11 @@ def main(config):
     # TODO save predictions to csv in kaggle format
 
     # NOTE: graphing
-    graphing.graph("AlexNet Training Loss",
-                   label=("Epochs", "Training Loss"),
-                   data=(range(len(train_losses)), train_losses),
-                   file_name="alexnet_train_loss.png")
-
     graphing.graph("AlexNet Validation Loss",
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
-                   file_name="alexnet_val_loss.png")
-
-    graphing.graph("AlexNet Training Accuracy",
-                   label=("Epochs", "Training Accuracy"),
-                   data=(range(len(train_accs)), train_accs),
-                   file_name="alexnet_train_accs.png")
-
-    graphing.graph("AlexNet Validation Accuracy",
-                   label=("Epochs", "Validation Accuracy"),
-                   data=(range(len(val_accs)), val_accs),
-                   file_name="alexnet_val_accs.png")
+                   file_name=f"alexnet_val_loss_{config.TRAIN.LR}.png",
+                   reset=False)
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -269,4 +255,6 @@ if __name__ == "__main__":
     logger.info(config.dump())
     logger.info(json.dumps(vars(args)))
 
-    main(config)
+    for lr in [1e-4, 3e-4, 1e-3, 3e-3]:
+        config.TRAIN.LR = lr
+        main(config)
