@@ -297,11 +297,11 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 
 ## 5.0 Setup plotting for training and validation accuracy and loss curves. Plot a point every epoch.
 
-`PUSH YOUR CODE TO YOUR OWN GITHUB :)`
+In `main.py`.
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
-`YOUR ANSWER HERE`
+
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.
 

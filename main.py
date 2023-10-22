@@ -8,7 +8,6 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
-import matplotlib.pyplot as plt
 
 
 from timm.utils import AverageMeter, accuracy
@@ -21,7 +20,7 @@ from config import get_config
 from data import build_loader
 from models import build_model
 from optimizer import build_optimizer
-from utils import create_logger, load_checkpoint, save_checkpoint
+from utils import create_logger, load_checkpoint, save_checkpoint, graphing
 
 
 def parse_option():
@@ -126,9 +125,16 @@ def main(config):
     np.save(os.path.join(config.OUTPUT, "preds.npy"), preds)
     # TODO save predictions to csv in kaggle format
 
-    # save graphs to files
-    plt.plot(train_losses)
-    plt.savefig("train.png")
+    # NOTE: graphing
+    graphing.graph("AlexNet Training Loss",
+                   label=("Epochs, Training Loss"),
+                   data=(range(len(train_losses)), train_losses),
+                   file_name="alexnet_train_loss.png")
+
+    graphing.graph("AlexNet Validation Loss",
+                   label=("Epochs, Validation Loss"),
+                   data=(range(len(val_losses)), val_losses),
+                   file_name="alexnet_val_loss.png")
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
