@@ -23,6 +23,10 @@ from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint, graphing
 
 
+# question specific values
+Q5_2_LEARNING_RATES = [1e-4, 3e-4, 1e-3, 3e-3]
+
+
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
     parser.add_argument("--cfg", type=str, required=True, metavar="FILE", help="path to config file")
@@ -130,11 +134,14 @@ def main(config):
     # TODO save predictions to csv in kaggle format
 
     # NOTE: graphing
-    graphing.graph("AlexNet Validation Loss",
+
+    # INFO: q5.2
+    graphing.graph("AlexNet Validation Losses",
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
                    file_name=f"alexnet_val_loss_{config.TRAIN.LR}.png",
-                   reset=False)
+                   reset=False,
+                   legend=list(map(str, Q5_2_LEARNING_RATES)))
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -257,6 +264,6 @@ if __name__ == "__main__":
 
     # INFO: q5.2:
     config.defrost()
-    for lr in [1e-4, 3e-4, 1e-3, 3e-3]:
+    for lr in Q5_2_LEARNING_RATES:
         config.TRAIN.LR = lr
         main(config)

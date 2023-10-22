@@ -168,16 +168,16 @@ Be sure to also get the class names. You might notice that we don't have them lo
 
 **Images**: (from `scripts.py` $\rightarrow$ `visualise()`)
 
-![0](other/cifar_0.jpg)
-![1](other/cifar_1.jpg)
-![2](other/cifar_2.jpg)
-![3](other/cifar_3.jpg)
-![4](other/cifar_4.jpg)
-![5](other/cifar_5.jpg)
-![6](other/cifar_6.jpg)
-![7](other/cifar_7.jpg)
-![8](other/cifar_8.jpg)
-![9](other/cifar_9.jpg)
+![0](other/1.2.3/cifar_0.jpg)
+![1](other/1.2.3/cifar_1.jpg)
+![2](other/1.2.3/cifar_2.jpg)
+![3](other/1.2.3/cifar_3.jpg)
+![4](other/1.2.3/cifar_4.jpg)
+![5](other/1.2.3/cifar_5.jpg)
+![6](other/1.2.3/cifar_6.jpg)
+![7](other/1.2.3/cifar_7.jpg)
+![8](other/1.2.3/cifar_8.jpg)
+![9](other/1.2.3/cifar_9.jpg)
 
 
 
