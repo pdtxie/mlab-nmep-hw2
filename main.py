@@ -127,12 +127,12 @@ def main(config):
 
     # NOTE: graphing
     graphing.graph("AlexNet Training Loss",
-                   label=("Epochs, Training Loss"),
+                   label=("Epochs", "Training Loss"),
                    data=(range(len(train_losses)), train_losses),
                    file_name="alexnet_train_loss.png")
 
     graphing.graph("AlexNet Validation Loss",
-                   label=("Epochs, Validation Loss"),
+                   label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
                    file_name="alexnet_val_loss.png")
 
