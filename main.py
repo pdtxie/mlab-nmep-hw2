@@ -89,6 +89,7 @@ def main(config):
 
     # graphs
     train_losses, val_losses = [], []
+    train_accs, val_accs = [], []
 
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
         train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
@@ -99,6 +100,9 @@ def main(config):
         val_acc1, val_loss = validate(config, data_loader_val, model)
         logger.info(f" * Val Acc {val_acc1:.3f} Val Loss {val_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
+
+        train_accs.append(train_acc1)
+        val_accs.append(val_acc1)
 
         train_losses.append(train_loss)
         val_losses.append(val_loss)
@@ -135,6 +139,16 @@ def main(config):
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
                    file_name="alexnet_val_loss.png")
+
+    graphing.graph("AlexNet Training Accuracy",
+                   label=("Epochs", "Training Accuracy"),
+                   data=(range(len(train_accs)), train_accs),
+                   file_name="alexnet_train_accs.png")
+
+    graphing.graph("AlexNet Validation Accuracy",
+                   label=("Epochs", "Validation Accuracy"),
+                   data=(range(len(val_accs)), val_accs),
+                   file_name="alexnet_val_accs.png")
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
