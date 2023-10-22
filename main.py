@@ -255,6 +255,8 @@ if __name__ == "__main__":
     logger.info(config.dump())
     logger.info(json.dumps(vars(args)))
 
+    # INFO: q5.2:
+    config.defrost()
     for lr in [1e-4, 3e-4, 1e-3, 3e-3]:
         config.TRAIN.LR = lr
         main(config)
