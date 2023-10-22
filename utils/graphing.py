@@ -9,7 +9,9 @@ def graph(title: str,
     plt.plot(data[0], data[1])
     plt.title(title)
 
-    plt.xlabel(xlabel=label[0])
-    plt.ylabel(ylabel=label[1])
+    x, y = label
+    plt.xlabel(xlabel=x)
+    plt.ylabel(ylabel=y)
 
     plt.savefig(file_name)
+    plt.clf()

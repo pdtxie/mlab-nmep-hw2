@@ -295,9 +295,9 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 > 
 > For this HW you have to use W&B. The next couple parts should be fairly easy if you setup logging for configs (hyperparameters) and for loss/accuracy. For a quick tutorial on how to use it, check out [this quickstart](https://docs.wandb.ai/quickstart). We will also cover it at HW party at some point this week if you need help.
 
-## 5.0 Setup plotting for training and validation accuracy and loss curves. Plot a point every epoch.
+## 5.0 Setup plotting for training and valgit@github.com:pdtxie/mlab-nmep-hw2.gitidation accuracy and loss curves. Plot a point every epoch.
 
-In `main.py`.
+In `utils/graphing.py`.
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
