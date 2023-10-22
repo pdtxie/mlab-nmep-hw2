@@ -332,7 +332,7 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
-`YOUR ANSWER HERE`
+
 
 ## 6.1 Visualize examples
 
