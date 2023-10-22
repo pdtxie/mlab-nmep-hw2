@@ -36,20 +36,14 @@ class ResNetBlock(nn.Module):
         and after the second batchnorm gets added to the shortcut.
         """
         self.features = [
-                nn.Conv2d(in_channels=in_channels,
-                          out_channels=out_channels,
-                          kernel_size=3,
-                          stride=stride),
-                nn.BatchNorm2d(),
-                nn.ReLU(),
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride),
+            nn.BatchNorm2d(),
+            nn.ReLU(),
 
-                nn.Conv2d(in_channels=in_channels,
-                          out_channels=out_channels,
-                          kernel_size=3,
-                          stride=1)
-                nn.BatchNorm2d(),
-                nn.ReLU()
-                ]
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=1),
+            nn.BatchNorm2d(),
+            nn.ReLU()
+        ]
 
         super().__init__()
 
@@ -57,12 +51,9 @@ class ResNetBlock(nn.Module):
 
         if out_channels != in_channels or stride != 1:
             self.shortcut = [
-                    nn.Conv2d(in_channels=in_channels,
-                              out_channels=out_channels,
-                              kernel_size=1,
-                              stride=stride),
-                    nn.BatchNorm2d()
-                    ]
+                nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride),
+                nn.BatchNorm2d()
+            ]
 
     def forward(self, x):
         """
