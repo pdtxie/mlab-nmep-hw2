@@ -140,8 +140,8 @@ def main(config):
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
                    file_name=f"alexnet_val_loss_{config.TRAIN.LR}.png",
-                   reset=False,
-                   legend=list(map(str, Q5_2_LEARNING_RATES)))
+                   legend=list(map(str, Q5_2_LEARNING_RATES)),
+                   reset=False)
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
