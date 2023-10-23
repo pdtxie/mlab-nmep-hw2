@@ -5,6 +5,7 @@ Reference:
     [1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun
     Deep Residual Learning for Image Recognition. arXiv:1512.03385
 """
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -49,7 +50,7 @@ class ResNetBlock(nn.Module):
 
         if out_channels != in_channels or stride != 1:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, padding=1, bias=False),
+                nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(out_channels))
 
     def forward(self, x):
