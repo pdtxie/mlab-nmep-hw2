@@ -154,7 +154,20 @@ def main(config):
     # return val_accs, val_losses
 
     # INFO: q5.4
-    return epoch_times
+    # return epoch_times
+
+    # INFO: q6/7
+    graphing.graph("ResNet Validation Losses",
+                   label=("Epochs", "Validation Loss"),
+                   data=(range(len(val_losses)), val_losses),
+                   file_name="resnet_val_losses.png")
+
+    graphing.graph("ResNet Validation Accuracies",
+                   label=("Epochs", "Validation Accuracy"),
+                   data=(range(len(val_accs)), val_accs),
+                   file_name="resnet_val_accs.png")
+
+
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -250,9 +263,6 @@ def evaluate(config, data_loader, model):
 
     preds = np.concatenate(preds)
 
-    print("HERE\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    print(preds)
-
     return preds
 
 
@@ -321,23 +331,28 @@ if __name__ == "__main__":
     # plt.clf()
 
     # INFO: q5.4:
-    # all_epoch_times = []
+    """
+    all_epoch_times = []
 
-    # for bs in Q5_4_BATCH_SIZES:
-    #     config.DATA.BATCH_SIZE = bs
-    #     epoch_times = main(config)
-    #     all_epoch_times.append(epoch_times)
+    for bs in Q5_4_BATCH_SIZES:
+        config.DATA.BATCH_SIZE = bs
+        epoch_times = main(config)
+        all_epoch_times.append(epoch_times)
 
-    # print(all_epoch_times)
+    print(all_epoch_times)
 
-    # throughputs = []
-    # for i, time in enumerate(epoch_times):
-    #     avg_time = np.average(time)
-    #     thp = avg_time / Q5_4_BATCH_SIZES[i]
-    #     throughputs.append(thp)
+    throughputs = []
+    for i, time in enumerate(epoch_times):
+        avg_time = np.average(time)
+        thp = avg_time / Q5_4_BATCH_SIZES[i]
+        throughputs.append(thp)
 
-    # plt.bar(Q5_4_BATCH_SIZES, throughputs)
-    # plt.xlabel("Batch Size")
-    # plt.ylabel("Throughput")
-    # plt.savefig("alexnet_throughputs.png")
-    # plt.clf()
+    plt.bar(Q5_4_BATCH_SIZES, throughputs)
+    plt.xlabel("Batch Size")
+    plt.ylabel("Throughput")
+    plt.savefig("alexnet_throughputs.png")
+    plt.clf()
+    """
+
+    # INFO: q6/7
+    main(config)
