@@ -43,9 +43,7 @@ class ResNetBlock(nn.Module):
             nn.ReLU(),
 
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU()
-        )
+            nn.BatchNorm2d(out_channels))
 
         self.shortcut = nn.Sequential()
 
@@ -71,9 +69,8 @@ class ResNetBlock(nn.Module):
 
 class ResNet18(nn.Module):
     def __init__(self, num_classes=200):
-        super().__init__()
-
         num_classes = num_classes
+        super(ResNet18, self).__init__()
         self.in_channels = 64
         self.conv1 = nn.Conv2d(in_channels=3,
                                out_channels=64,
@@ -104,4 +101,5 @@ class ResNet18(nn.Module):
         x = F.avg_pool2d(x, 4)
         x = torch.flatten(x, 1)
         x = self.linear(x)
+
         return x
