@@ -323,7 +323,8 @@ In `utils/graphing.py`.
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
-`YOUR ANSWER HERE`
+![9](other/5.3/alexnet_val_loss.png)
+![10](other/5.3/alexnet_val_acc.png)
 
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
 You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 
@@ -346,7 +347,11 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
+Hyperparameters in the config file.
 
+Best validation accuracy: $85.5\%$
+
+Training time: 4hr 48m.
 
 ## 6.1 Visualize examples
 
