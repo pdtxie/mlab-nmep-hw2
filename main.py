@@ -144,20 +144,7 @@ def main(config):
     #                legend=list(map(str, Q5_2_LEARNING_RATES)),
     #                reset=False)
 
-    # INFO: q5.3
-    graphing.graph("AlexNet Validation Losses",
-                   label=("Epochs", "Validation Loss"),
-                   data=(range(len(val_losses)), val_losses),
-                   file_name=f"alexnet_val_loss_{config.DATA.BATCH_SIZE}.png",
-                   legend=list(map(str, Q5_3_BATCH_SIZES)),
-                   reset=False)
-
-    graphing.graph("AlexNet Validation Accuracies",
-                   label=("Epochs", "Validation Accuracy"),
-                   data=(range(len(val_accs)), val_accs),
-                   file_name=f"alexnet_val_acc_{config.DATA.BATCH_SIZE}.png",
-                   legend=list(map(str, Q5_3_BATCH_SIZES)),
-                   reset=False)
+    return val_accs, val_losses
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -286,6 +273,36 @@ if __name__ == "__main__":
     #     main(config)
 
     # INFO: q5.3:
+    all_accs, all_losses = [], []
+
     for bs in Q5_3_BATCH_SIZES:
         config.DATA.BATCH_SIZE = bs
-        main(config)
+        accs, losses = main(config)
+
+        all_accs.append(accs)
+        all_losses.append(losses)
+
+    print("ACCS:")
+    print(all_accs)
+    print("LOSSES:")
+    print(all_losses)
+
+    for acc in all_accs:
+        graphing.graph("AlexNet Validation Accuracies",
+                       label=("Epochs", "Validation Accuracy"),
+                       data=(range(len(acc)), acc),
+                       file_name="alexnet_val_acc.png",
+                       legend=list(map(str, Q5_2_LEARNING_RATES)),
+                       reset=False)
+
+    plt.clf()
+
+    for loss in all_losses:
+        graphing.graph("AlexNet Validation Losses",
+                       label=("Epochs", "Validation Loss"),
+                       data=(range(len(loss)), loss),
+                       file_name="alexnet_val_loss.png",
+                       legend=list(map(str, Q5_2_LEARNING_RATES)),
+                       reset=False)
+
+    plt.clf()
