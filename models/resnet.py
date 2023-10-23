@@ -35,7 +35,9 @@ class ResNetBlock(nn.Module):
         When performing a forward pass, the ReLU activation should be applied after the first batchnorm layer
         and after the second batchnorm gets added to the shortcut.
         """
-        self.features = [
+        super().__init__()
+
+        self.features = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(),
@@ -43,17 +45,16 @@ class ResNetBlock(nn.Module):
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU()
-        ]
-
-        super().__init__()
+        )
 
         self.shortcut = nn.Sequential()
 
         if out_channels != in_channels or stride != 1:
-            self.shortcut = [
+            self.shortcut = nn.Sequential(
+>>>>>>> 143cd981906b1d990452527e4729054d5f973261
                 nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, padding=1),
                 nn.BatchNorm2d(out_channels)
-            ]
+            )
 
     def forward(self, x):
         """
