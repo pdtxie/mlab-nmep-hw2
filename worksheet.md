@@ -337,7 +337,6 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 ## 5.6 (optional) Play around with more hyperparameters. I recommend playing around with the optimizer (Adam, SGD, RMSProp, etc), learning rate scheduler (constant, StepLR, ReduceLROnPlateau, etc), weight decay, dropout, activation functions (ReLU, Leaky ReLU, GELU, Swish, etc), etc.
 
-`YOUR ANSWER HERE`
 
 
 
@@ -351,7 +350,7 @@ Hyperparameters in the config file.
 
 Best validation accuracy: $85.5\%$
 
-Training time: 4hr 48m.
+Training time: $4hr\ 48m$.
 
 ## 6.1 Visualize examples
 

@@ -8,6 +8,7 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
 
 
 from timm.utils import AverageMeter, accuracy
@@ -26,6 +27,8 @@ from utils import create_logger, load_checkpoint, save_checkpoint, graphing
 # question specific values
 Q5_2_LEARNING_RATES = [1e-4, 3e-4, 1e-3, 3e-3]
 Q5_3_BATCH_SIZES = [128, 256, 512, 480, 1024]
+Q5_4_BATCH_SIZES = [2**i for i in range(15)]
+print(Q5_4_BATCH_SIZES)
 
 
 def parse_option():
@@ -96,8 +99,10 @@ def main(config):
     train_losses, val_losses = [], []
     train_accs, val_accs = [], []
 
+    epoch_times = []
+
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
-        train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+        train_acc1, train_loss, epoch_time = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
         logger.info(f" * Train Acc {train_acc1:.3f} Train Loss {train_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_train)} train images: {train_acc1:.1f}%")
 
@@ -105,6 +110,8 @@ def main(config):
         val_acc1, val_loss = validate(config, data_loader_val, model)
         logger.info(f" * Val Acc {val_acc1:.3f} Val Loss {val_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
+
+        epoch_times.append(epoch_time)
 
         train_accs.append(train_acc1)
         val_accs.append(val_acc1)
@@ -144,7 +151,12 @@ def main(config):
     #                legend=list(map(str, Q5_2_LEARNING_RATES)),
     #                reset=False)
 
-    return val_accs, val_losses
+    # INFO: q5.3
+    # return val_accs, val_losses
+
+    # INFO: q5.4
+    return epoch_times
+
 
 
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
@@ -186,7 +198,7 @@ def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
     )
     epoch_time = time.time() - start
     logger.info(f"EPOCH {epoch} training takes {datetime.timedelta(seconds=int(epoch_time))}")
-    return acc1_meter.avg, loss_meter.avg
+    return acc1_meter.avg, loss_meter.avg, epoch_time
 
 
 @torch.no_grad()
@@ -273,36 +285,58 @@ if __name__ == "__main__":
     #     main(config)
 
     # INFO: q5.3:
-    all_accs, all_losses = [], []
+    # all_accs, all_losses = [], []
 
-    for bs in Q5_3_BATCH_SIZES:
+    # for bs in Q5_3_BATCH_SIZES:
+    #     config.DATA.BATCH_SIZE = bs
+    #     accs, losses = main(config)
+
+    #     all_accs.append(accs)
+    #     all_losses.append(losses)
+
+    # print("ACCS:")
+    # print(all_accs)
+    # print("LOSSES:")
+    # print(all_losses)
+
+    # for acc in all_accs:
+    #     graphing.graph("AlexNet Validation Accuracies",
+    #                    label=("Epochs", "Validation Accuracy"),
+    #                    data=(range(len(acc)), acc),
+    #                    file_name="alexnet_val_acc.png",
+    #                    legend=list(map(str, Q5_2_LEARNING_RATES)),
+    #                    reset=False)
+
+    # plt.clf()
+
+    # for loss in all_losses:
+    #     graphing.graph("AlexNet Validation Losses",
+    #                    label=("Epochs", "Validation Loss"),
+    #                    data=(range(len(loss)), loss),
+    #                    file_name="alexnet_val_loss.png",
+    #                    legend=list(map(str, Q5_2_LEARNING_RATES)),
+    #                    reset=False)
+
+    # plt.clf()
+
+    # INFO: q5.4:
+    all_epoch_times = []
+
+    for bs in Q5_4_BATCH_SIZES:
         config.DATA.BATCH_SIZE = bs
-        accs, losses = main(config)
+        epoch_times = main(config)
+        all_epoch_times.append(epoch_times)
 
-        all_accs.append(accs)
-        all_losses.append(losses)
+    print(all_epoch_times)
 
-    print("ACCS:")
-    print(all_accs)
-    print("LOSSES:")
-    print(all_losses)
+    throughputs = []
+    for i, time in enumerate(epoch_times):
+        avg_time = np.average(time)
+        thp = avg_time / Q5_4_BATCH_SIZES[i]
+        throughputs.append(thp)
 
-    for acc in all_accs:
-        graphing.graph("AlexNet Validation Accuracies",
-                       label=("Epochs", "Validation Accuracy"),
-                       data=(range(len(acc)), acc),
-                       file_name="alexnet_val_acc.png",
-                       legend=list(map(str, Q5_2_LEARNING_RATES)),
-                       reset=False)
-
-    plt.clf()
-
-    for loss in all_losses:
-        graphing.graph("AlexNet Validation Losses",
-                       label=("Epochs", "Validation Loss"),
-                       data=(range(len(loss)), loss),
-                       file_name="alexnet_val_loss.png",
-                       legend=list(map(str, Q5_2_LEARNING_RATES)),
-                       reset=False)
-
+    plt.bar(Q5_4_BATCH_SIZES, throughputs)
+    plt.xlabel("Batch Size")
+    plt.ylabel("Throughput")
+    plt.savefig("alexnet_throughputs.png")
     plt.clf()
