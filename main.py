@@ -28,7 +28,6 @@ from utils import create_logger, load_checkpoint, save_checkpoint, graphing
 Q5_2_LEARNING_RATES = [1e-4, 3e-4, 1e-3, 3e-3]
 Q5_3_BATCH_SIZES = [128, 256, 512, 480, 1024]
 Q5_4_BATCH_SIZES = [2**i for i in range(15)]
-print(Q5_4_BATCH_SIZES)
 
 
 def parse_option():
@@ -158,7 +157,6 @@ def main(config):
     return epoch_times
 
 
-
 def train_one_epoch(config, model, criterion, data_loader, optimizer, epoch):
     model.train()
 
@@ -252,6 +250,9 @@ def evaluate(config, data_loader, model):
 
     preds = np.concatenate(preds)
 
+    print("HERE\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print(preds)
+
     return preds
 
 
@@ -320,23 +321,23 @@ if __name__ == "__main__":
     # plt.clf()
 
     # INFO: q5.4:
-    all_epoch_times = []
+    # all_epoch_times = []
 
-    for bs in Q5_4_BATCH_SIZES:
-        config.DATA.BATCH_SIZE = bs
-        epoch_times = main(config)
-        all_epoch_times.append(epoch_times)
+    # for bs in Q5_4_BATCH_SIZES:
+    #     config.DATA.BATCH_SIZE = bs
+    #     epoch_times = main(config)
+    #     all_epoch_times.append(epoch_times)
 
-    print(all_epoch_times)
+    # print(all_epoch_times)
 
-    throughputs = []
-    for i, time in enumerate(epoch_times):
-        avg_time = np.average(time)
-        thp = avg_time / Q5_4_BATCH_SIZES[i]
-        throughputs.append(thp)
+    # throughputs = []
+    # for i, time in enumerate(epoch_times):
+    #     avg_time = np.average(time)
+    #     thp = avg_time / Q5_4_BATCH_SIZES[i]
+    #     throughputs.append(thp)
 
-    plt.bar(Q5_4_BATCH_SIZES, throughputs)
-    plt.xlabel("Batch Size")
-    plt.ylabel("Throughput")
-    plt.savefig("alexnet_throughputs.png")
-    plt.clf()
+    # plt.bar(Q5_4_BATCH_SIZES, throughputs)
+    # plt.xlabel("Batch Size")
+    # plt.ylabel("Throughput")
+    # plt.savefig("alexnet_throughputs.png")
+    # plt.clf()

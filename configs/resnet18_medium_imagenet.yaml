@@ -8,7 +8,7 @@ DATA:
 MODEL:
   NUM_CLASSES: 200
 TRAIN:
-  EPOCHS: 10
+  EPOCHS: 5
   WARMUP_EPOCHS: 2
 OUTPUT: "output/resnet18_medium_imagenet"
 SAVE_FREQ: 1
