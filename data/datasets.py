@@ -54,7 +54,7 @@ class MediumImagenetHDF5Dataset(Dataset):
     def __init__(self,
                  img_size,
                  split: str = "train",
-                 filepath: str = "/data/medium-imagenet/medium-imagenet-nmep-96.hdf5",
+                 filepath: str = "/honey/nmep/medium-imagenet-96.hdf5",
                  augment: bool = True):
 
         assert split in ["train", "val", "test"]
