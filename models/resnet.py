@@ -38,11 +38,11 @@ class ResNetBlock(nn.Module):
         super().__init__()
 
         self.features = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride),
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(),
 
-            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=1),
+            nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU()
         )
@@ -51,7 +51,7 @@ class ResNetBlock(nn.Module):
 
         if out_channels != in_channels or stride != 1:
             self.shortcut = nn.Sequential(
-                nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride),
+                nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=1, stride=stride, padding=1),
                 nn.BatchNorm2d(out_channels)
             )
 
