@@ -25,6 +25,7 @@ from utils import create_logger, load_checkpoint, save_checkpoint, graphing
 
 # question specific values
 Q5_2_LEARNING_RATES = [1e-4, 3e-4, 1e-3, 3e-3]
+Q5_3_BATCH_SIZES = [128, 256, 512, 480, 1024]
 
 
 def parse_option():
@@ -136,11 +137,26 @@ def main(config):
     # NOTE: graphing
 
     # INFO: q5.2
+    # graphing.graph("AlexNet Validation Losses",
+    #                label=("Epochs", "Validation Loss"),
+    #                data=(range(len(val_losses)), val_losses),
+    #                file_name=f"alexnet_val_loss_{config.TRAIN.LR}.png",
+    #                legend=list(map(str, Q5_2_LEARNING_RATES)),
+    #                reset=False)
+
+    # INFO: q5.3
     graphing.graph("AlexNet Validation Losses",
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
-                   file_name=f"alexnet_val_loss_{config.TRAIN.LR}.png",
-                   legend=list(map(str, Q5_2_LEARNING_RATES)),
+                   file_name=f"alexnet_val_loss_{config.DATA.BATCH_SIZE}.png",
+                   legend=list(map(str, Q5_3_BATCH_SIZES)),
+                   reset=False)
+
+    graphing.graph("AlexNet Validation Accuracies",
+                   label=("Epochs", "Validation Accuracy"),
+                   data=(range(len(val_accs)), val_accs),
+                   file_name=f"alexnet_val_acc_{config.DATA.BATCH_SIZE}.png",
+                   legend=list(map(str, Q5_3_BATCH_SIZES)),
                    reset=False)
 
 
@@ -262,8 +278,14 @@ if __name__ == "__main__":
     logger.info(config.dump())
     logger.info(json.dumps(vars(args)))
 
-    # INFO: q5.2:
     config.defrost()
-    for lr in Q5_2_LEARNING_RATES:
-        config.TRAIN.LR = lr
+
+    # INFO: q5.2:
+    # for lr in Q5_2_LEARNING_RATES:
+    #     config.TRAIN.LR = lr
+    #     main(config)
+
+    # INFO: q5.3:
+    for bs in Q5_3_BATCH_SIZES:
+        config.DATA.BATCH_SIZE = bs
         main(config)
