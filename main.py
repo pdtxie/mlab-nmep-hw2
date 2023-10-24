@@ -9,7 +9,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
+import torch.multiprocessing as mp
 
+from torch.utils.data.distributed import DistributedSampler
 
 from timm.utils import AverageMeter, accuracy
 from torch.optim.lr_scheduler import CosineAnnealingLR
@@ -56,14 +58,35 @@ def parse_option():
     return args, config
 
 
+# def setup(rank):
+    # os.environ['MASTER_ADDR'] = 'localhost'
+    # os.environ['MASTER_PORT'] = '12355'
+
+    # torch.distributed.init_process_group(backend="gloo", rank=rank, world_size=4)
+
+# def cleanup():
+    # torch.distributed.destroy_process_group()
+
+# def ddp_run(rank, model):
+    # setup(rank)
+
+    # model = model.to(rank)
+    # ddp_model = nn.parallel.DistributedDataParallel(model)
+
+    # cleanup()
+
+
 def main(config):
     dataset_train, dataset_val, dataset_test, data_loader_train, data_loader_val, data_loader_test = build_loader(config)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = build_model(config)
+    # model = model.cuda()
+    model = model.to(device)
+
     # logger.info(str(model))
 
-    model = model.to(device)
+    # mp.spawn(ddp_run, args=(model,), nprocs=4)
 
     # param and flop counts
     n_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -154,9 +177,10 @@ def main(config):
     # return val_accs, val_losses
 
     # INFO: q5.4
-    # return epoch_times
+    return epoch_times
 
     # INFO: q6/7
+    """
     graphing.graph("ResNet Validation Losses",
                    label=("Epochs", "Validation Loss"),
                    data=(range(len(val_losses)), val_losses),
@@ -166,6 +190,30 @@ def main(config):
                    label=("Epochs", "Validation Accuracy"),
                    data=(range(len(val_accs)), val_accs),
                    file_name="resnet_val_accs.png")
+    """
+
+    # plt.plot(range(len(val_losses)), val_losses)
+    # plt.title("ResNet Validation Losses")
+
+    # plt.xlabel(xlabel="Epochs")
+    # plt.ylabel(ylabel="Validation Loss")
+
+    # plt.savefig("resnet_val_losses.png")
+    # plt.clf()
+
+
+    # plt.plot(range(len(val_accs)), val_accs)
+    # plt.title("ResNet Validation Accuracies")
+
+    # plt.xlabel(xlabel="Epochs")
+    # plt.ylabel(ylabel="Validation Accuracies")
+
+    # plt.savefig("resnet_val_accs.png")
+    # plt.clf()
+
+    # print(val_accs)
+    # print(val_losses)
+
 
 
 
@@ -331,20 +379,23 @@ if __name__ == "__main__":
     # plt.clf()
 
     # INFO: q5.4:
-    """
     all_epoch_times = []
 
-    for bs in Q5_4_BATCH_SIZES:
+    for i, bs in enumerate(Q5_4_BATCH_SIZES):
         config.DATA.BATCH_SIZE = bs
+        print(f"TRAINING FOR BATCH SIZE {bs} = {(i+1)}/{len(Q5_4_BATCH_SIZES)}")
         epoch_times = main(config)
-        all_epoch_times.append(epoch_times)
+        avg = np.average(epoch_times)
+        print("\n"*10)
+        print(bs)
+        print(avg)
+        all_epoch_times.append(avg)
 
     print(all_epoch_times)
 
     throughputs = []
-    for i, time in enumerate(epoch_times):
-        avg_time = np.average(time)
-        thp = avg_time / Q5_4_BATCH_SIZES[i]
+    for i, time in enumerate(all_apoch_times):
+        thp = time / Q5_4_BATCH_SIZES[i]
         throughputs.append(thp)
 
     plt.bar(Q5_4_BATCH_SIZES, throughputs)
@@ -352,7 +403,6 @@ if __name__ == "__main__":
     plt.ylabel("Throughput")
     plt.savefig("alexnet_throughputs.png")
     plt.clf()
-    """
 
     # INFO: q6/7
-    main(config)
+    # main(config)
