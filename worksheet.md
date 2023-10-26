@@ -346,6 +346,12 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 In `models/*`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
+
+##### these were for the medium imagenet, but still graphs nonetheless
+
+![](other/6/resnet_val_accs.png)
+![](other/6/resnet_val_losses.png)
+
 Hyperparameters in the config file.
 
 Best validation accuracy: $85.5\%$
@@ -380,3 +386,6 @@ We don't expect anything fancy here. Just a brief summary of what you did, what 
 **REQUIREMENT**: Everyone in your group must be able to explain what you did! Even if one person carries (I know, it happens) everyone must still be able to explain what's going on!
 
 Now go play with the models and have some competitive fun! 🎉
+
+
+Trained on 75 epochs with 10 warmup. Training time took so long so i only trained once.
